@@ -1,5 +1,6 @@
 package com.papelaria.sgc.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import com.papelaria.sgc.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -19,24 +20,46 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    // ✅ CADASTRAR USUÁRIO
     @PostMapping
     public ResponseEntity<RespostaDTO> cadastrar(@RequestBody UsuarioDTO dto) {
         try {
             usuarioService.cadastrar(dto);
-            return ResponseEntity.ok(new RespostaDTO("Usuário cadastrado com sucesso"));
-        } catch (RuntimeException erro) {
-            return ResponseEntity.badRequest().body(new RespostaDTO(erro.getMessage()));
+
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(new RespostaDTO("Usuário cadastrado com sucesso"));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new RespostaDTO(e.getMessage()));
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RespostaDTO("Erro interno ao cadastrar usuário"));
         }
     }
 
+    // ✅ LOGIN
     @PostMapping("/login")
     public ResponseEntity<RespostaDTO> login(@RequestBody LoginDTO dto) {
-        boolean loginValido = usuarioService.login(dto);
+        try {
+            boolean loginValido = usuarioService.login(dto);
 
-        if (loginValido) {
-            return ResponseEntity.ok(new RespostaDTO("Login realizado com sucesso"));
+            if (loginValido) {
+                return ResponseEntity.ok(new RespostaDTO("Login realizado com sucesso"));
+            }
+
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(new RespostaDTO("Usuário ou senha inválidos"));
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RespostaDTO("Erro interno no login"));
         }
-
-        return ResponseEntity.badRequest().body(new RespostaDTO("Usuário ou senha inválidos"));
     }
 }
