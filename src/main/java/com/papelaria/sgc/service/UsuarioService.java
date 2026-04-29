@@ -1,5 +1,6 @@
 package com.papelaria.sgc.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.papelaria.sgc.dto.LoginDTO;
@@ -11,6 +12,7 @@ import com.papelaria.sgc.repository.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -20,7 +22,7 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
 
         usuario.setUsername(dto.getUsername());
-        usuario.setSenha(dto.getSenha());
+        usuario.setSenha(encoder.encode(dto.getSenha()));
         usuario.setPerfil(dto.getPerfil());
 
         return usuarioRepository.save(usuario);
@@ -33,6 +35,6 @@ public class UsuarioService {
             return false;
         }
 
-        return usuario.getSenha().equals(dto.getSenha());
+        return encoder.matches(dto.getSenha(), usuario.getSenha());
     }
 }
