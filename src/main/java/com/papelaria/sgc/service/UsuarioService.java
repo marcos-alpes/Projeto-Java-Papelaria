@@ -19,9 +19,16 @@ public class UsuarioService {
     }
 
     public Usuario cadastrar(UsuarioDTO dto) {
+    	String username = dto.getUsername().trim();
+    	Usuario usuarioExistente = usuarioRepository.findByUsername(username);
+
+        if (usuarioExistente != null) {
+            throw new RuntimeException("Usuário já existe");
+        }
+
         Usuario usuario = new Usuario();
 
-        usuario.setUsername(dto.getUsername());
+        usuario.setUsername(username);
         usuario.setSenha(encoder.encode(dto.getSenha()));
         usuario.setPerfil(dto.getPerfil());
 
