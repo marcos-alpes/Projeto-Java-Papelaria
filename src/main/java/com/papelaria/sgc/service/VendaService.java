@@ -22,9 +22,6 @@ public class VendaService {
     @Autowired
     private VendaRepository vendaRepository;
 
-    @Autowired
-    private ItemVendaRepository itemVendaRepository;
-
     // Injeta o ProdutoService da Júlia para verificar e atualizar estoque
     @Autowired
     private ProdutoService produtoService;
