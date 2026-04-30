@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria - Vendas</title>
+    <link rel="stylesheet" href="vendas.css">
+</head>
+<body>
+
+<header>
+    <h1>📦 SGC Papelaria</h1>
+    <nav>
+        <a href="../login/login.html">Login</a>
+        <a href="../clientes/clientes.html">Clientes</a>
+        <a href="../produtos/produtos.html">Produtos</a>
+        <a href="vendas.html" class="ativo">Vendas</a>
+        <a href="../relatorios/relatorios.html">Relatórios</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Registrar Nova Venda</h2>
+
+    <!-- Formulário para criar venda -->
+    <section class="card">
+        <h3>Nova Venda</h3>
+
+        <div class="form-group">
+            <label for="clienteId">ID do Cliente:</label>
+            <input type="number" id="clienteId" placeholder="Digite o ID do cliente" min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="usuarioId">ID do Usuário (quem está vendendo):</label>
+            <input type="number" id="usuarioId" placeholder="ID do usuário logado" min="1">
+        </div>
+
+        <h4>Itens da Venda</h4>
+        <div id="listaItens">
+            <!-- Itens adicionados aparecem aqui -->
+        </div>
+
+        <div class="form-inline">
+            <input type="number" id="produtoId" placeholder="ID Produto" min="1">
+            <input type="number" id="quantidade" placeholder="Qtd" min="1">
+            <input type="number" id="precoUnitario" placeholder="Preço Unitário" step="0.01" min="0">
+            <button onclick="adicionarItem()" class="btn-secundario">+ Adicionar Item</button>
+        </div>
+
+        <div class="total-box">
+            <strong>Total: R$ <span id="totalVenda">0,00</span></strong>
+        </div>
+
+        <button onclick="registrarVenda()" class="btn-primario">✅ Registrar Venda</button>
+        <p id="mensagem" class="mensagem"></p>
+    </section>
+
+    <!-- Lista de vendas -->
+    <section class="card">
+        <h3>Vendas Registradas</h3>
+        <button onclick="carregarVendas()" class="btn-secundario">🔄 Atualizar Lista</button>
+        <div id="tabelaVendas"></div>
+    </section>
+</main>
+
+<script src="vendas.js"></script>
+</body>
+</html>
