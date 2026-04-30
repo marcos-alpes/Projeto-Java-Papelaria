@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria - Relatórios</title>
+    <!-- Chart.js para gerar o gráfico de vendas anuais -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="relatorios.css">
+</head>
+<body>
+
+<header>
+    <h1>📦 SGC Papelaria</h1>
+    <nav>
+        <a href="../login/login.html">Login</a>
+        <a href="../clientes/clientes.html">Clientes</a>
+        <a href="../produtos/produtos.html">Produtos</a>
+        <a href="../vendas/vendas.html">Vendas</a>
+        <a href="relatorios.html" class="ativo">Relatórios</a>
+    </nav>
+</header>
+
+<main>
+    <h2>📊 Relatórios de Vendas</h2>
+
+    <!-- Filtro por Período -->
+    <section class="card">
+        <h3>Vendas por Período</h3>
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Data Início:</label>
+                <input type="date" id="dataInicio">
+            </div>
+            <div class="form-group">
+                <label>Data Fim:</label>
+                <input type="date" id="dataFim">
+            </div>
+            <button onclick="buscarPorPeriodo()" class="btn-primario">🔍 Buscar</button>
+        </div>
+        <div id="resultadoPeriodo"></div>
+    </section>
+
+    <!-- Filtro por Cliente -->
+    <section class="card">
+        <h3>Vendas por Cliente</h3>
+        <div class="form-inline">
+            <div class="form-group">
+                <label>ID do Cliente:</label>
+                <input type="number" id="clienteIdRelatorio" placeholder="Ex: 1" min="1">
+            </div>
+            <button onclick="buscarPorCliente()" class="btn-primario">🔍 Buscar</button>
+        </div>
+        <div id="resultadoCliente"></div>
+    </section>
+
+    <!-- Gráfico Anual -->
+    <section class="card">
+        <h3>Gráfico de Vendas Anuais</h3>
+        <div class="form-inline">
+            <div class="form-group">
+                <label>Ano:</label>
+                <input type="number" id="anoGrafico" value="2025" min="2020" max="2099">
+            </div>
+            <button onclick="carregarGrafico()" class="btn-primario">📈 Gerar Gráfico</button>
+        </div>
+        <div class="grafico-container">
+            <canvas id="graficoVendas"></canvas>
+        </div>
+    </section>
+</main>
+
+<script src="relatorios.js"></script>
+</body>
+</html>

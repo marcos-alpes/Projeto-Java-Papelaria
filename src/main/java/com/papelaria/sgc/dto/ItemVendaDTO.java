@@ -2,10 +2,6 @@ package com.papelaria.sgc.dto;
 
 import java.math.BigDecimal;
 
-/**
- * DTO para ItemVenda.
- * Trafega os dados de cada item de uma venda sem expor a entidade diretamente.
- */
 public class ItemVendaDTO {
 
     private Long id;

@@ -25,23 +25,18 @@ public class Venda {
     @Column(nullable = false)
     private LocalDate data;
 
-    // Relacionamento com cliente (feito pela Andressa)
-    // Aqui usamos só o ID para não criar dependência circular entre módulos
     @Column(name = "cliente_id", nullable = false)
     private Long clienteId;
 
-    // Relacionamento com usuário (feito pelo Marcos)
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
 
     @Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal valorTotal = BigDecimal.ZERO;
 
-    // Um venda tem vários itens
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemVenda> itens = new ArrayList<>();
 
-    // Construtores
     public Venda() {}
 
     public Venda(LocalDate data, Long clienteId, Long usuarioId) {
@@ -50,7 +45,6 @@ public class Venda {
         this.usuarioId = usuarioId;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

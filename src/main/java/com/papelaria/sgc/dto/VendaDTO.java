@@ -4,11 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * DTO (Data Transfer Object) para Venda.
- * Design Pattern DTO: separa os dados trafegados na API da entidade do banco.
- * Evita expor campos internos e previne problemas de serialização de entidades JPA.
- */
 public class VendaDTO {
 
     private Long id;
@@ -18,10 +13,8 @@ public class VendaDTO {
     private BigDecimal valorTotal;
     private List<ItemVendaDTO> itens;
 
-    // Construtor vazio (necessário para desserialização do JSON)
     public VendaDTO() {}
 
-    // Construtor completo
     public VendaDTO(Long id, LocalDate data, Long clienteId, Long usuarioId,
                     BigDecimal valorTotal, List<ItemVendaDTO> itens) {
         this.id = id;
@@ -32,7 +25,6 @@ public class VendaDTO {
         this.itens = itens;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
