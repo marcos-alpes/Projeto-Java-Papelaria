@@ -1,20 +1,20 @@
 package com.papelaria.sgc.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.papelaria.sgc.dto.ItemVendaDTO;
 import com.papelaria.sgc.dto.VendaDTO;
 import com.papelaria.sgc.model.ItemVenda;
 import com.papelaria.sgc.model.Produto;
 import com.papelaria.sgc.model.Venda;
-import com.papelaria.sgc.repository.ItemVendaRepository;
 import com.papelaria.sgc.repository.VendaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class VendaService {
