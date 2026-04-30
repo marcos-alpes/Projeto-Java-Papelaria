@@ -15,8 +15,12 @@ public class ProdutoService {
         this.repository = repository;
     }
 
+    // ==========================
+    // SALVAR (COM VALIDAÇÕES)
+    // ==========================
     public Produto salvar(Produto produto) {
 
+        // 🔴 VALIDAÇÕES
         if (produto.getPreco() < 0) {
             throw new RuntimeException("Preço não pode ser negativo");
         }
@@ -25,21 +29,46 @@ public class ProdutoService {
             throw new RuntimeException("Estoque não pode ser negativo");
         }
 
+        // 🔴 EVITAR DUPLICADO (POR NOME)
+        List<Produto> produtos = repository.findAll();
+
+        for (Produto p : produtos) {
+            if (p.getNome().equalsIgnoreCase(produto.getNome())
+                    && (produto.getId() == null || !p.getId().equals(produto.getId()))) {
+
+                throw new RuntimeException("Já existe um produto com esse nome");
+            }
+        }
+
         return repository.save(produto);
     }
 
+    // ==========================
+    // LISTAR
+    // ==========================
     public List<Produto> listar() {
         return repository.findAll();
     }
 
+    // ==========================
+    // BUSCAR POR ID
+    // ==========================
+    public Produto buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
+    // ==========================
+    // DELETAR
+    // ==========================
     public void deletar(Long id) {
         repository.deleteById(id);
     }
 
+    // ==========================
+    // ESTOQUE BAIXO
+    // ==========================
     public List<Produto> estoqueBaixo() {
-        return repository.findAll()
-                .stream()
-                .filter(p -> p.getQuantidadeEstoque() <= p.getEstoqueMinimo())
-                .toList();
+        return repository.findByQuantidadeEstoqueLessThan(10);
     }
 }
