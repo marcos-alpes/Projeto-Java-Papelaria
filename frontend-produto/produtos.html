@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+    <link rel="stylesheet" href="produtos.css">
+</head>
+<body>
+
+<div class="container-produtos">
+
+    <h1>Cadastro de Produtos</h1>
+
+    <form id="form-produto" class="form-produto">
+        <input type="hidden" id="id">
+
+        <input type="text" id="nome" placeholder="Nome do produto" required>
+        <input type="text" id="descricao" placeholder="Descrição" required>
+        <input type="number" id="preco" placeholder="Preço" required>
+        <input type="number" id="quantidadeEstoque" placeholder="Quantidade em estoque" required>
+        <input type="number" id="estoqueMinimo" placeholder="Estoque mínimo" required>
+
+        <button type="submit" class="btn-salvar">Salvar</button>
+    </form>
+
+    <h2>Lista de Produtos</h2>
+
+    <table class="tabela-produtos">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Mínimo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-produtos"></tbody>
+    </table>
+
+</div>
+
+<script src="produtos.js"></script>
+</body>
+</html>
