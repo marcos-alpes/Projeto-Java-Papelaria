@@ -1,18 +1,42 @@
 body {
-    font-family: Arial;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
 }
 
-h1 {
-    color: red;
+.container-produtos {
+    width: 90%;
+    margin: 30px auto;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
 }
 
-table {
+h1, h2 {
+    text-align: center;
+}
+
+.tabela-produtos {
     width: 100%;
     border-collapse: collapse;
 }
 
-td, th {
-    border: 1px solid #ccc;
+.tabela-produtos th {
+    background-color: #2d89ef;
+    color: white;
+}
+
+.tabela-produtos th,
+.tabela-produtos td {
     padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Destaque estoque baixo */
+.estoque-baixo {
+    background-color: #ffe5e5;
+    color: #a10000;
+    font-weight: bold;
 }
