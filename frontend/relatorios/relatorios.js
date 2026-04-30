@@ -166,3 +166,9 @@ window.onload = function () {
     document.getElementById("anoGrafico").value = anoAtual;
     carregarGrafico();
 };
+
+window.onload = function () {
+    const anoAtual = new Date().getFullYear();
+    document.getElementById("anoGrafico").value = anoAtual;
+    carregarGrafico();
+};
