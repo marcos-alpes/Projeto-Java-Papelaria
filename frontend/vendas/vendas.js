@@ -5,7 +5,6 @@ let itensVenda = [];
 function adicionarItem() {
     const produtoId = parseInt(document.getElementById("produtoId").value);
     const quantidade = parseInt(document.getElementById("quantidade").value);
-    const preco = parseFloat(document.getElementById("precoUnitario").value);
 
     if (!produtoId || produtoId <= 0) {
         alert("Informe um ID de produto válido.");
@@ -15,22 +14,22 @@ function adicionarItem() {
         alert("A quantidade deve ser maior que zero.");
         return;
     }
-    if (!preco || preco <= 0) {
-        alert("O preço unitário deve ser maior que zero.");
+
+    // Verifica se o produto já foi adicionado
+    const jaExiste = itensVenda.find(i => i.produtoId === produtoId);
+    if (jaExiste) {
+        alert("Esse produto já foi adicionado. Remova e adicione novamente se quiser alterar a quantidade.");
         return;
     }
 
     const item = {
         produtoId: produtoId,
-        quantidade: quantidade,
-        precoUnitario: preco,
-        subtotal: preco * quantidade
+        quantidade: quantidade
     };
     itensVenda.push(item);
 
     document.getElementById("produtoId").value = "";
     document.getElementById("quantidade").value = "";
-    document.getElementById("precoUnitario").value = "";
 
     renderizarItens();
 }
@@ -42,37 +41,29 @@ function removerItem(index) {
 
 function renderizarItens() {
     const lista = document.getElementById("listaItens");
-    const totalSpan = document.getElementById("totalVenda");
 
     lista.innerHTML = "";
-    let total = 0;
 
     if (itensVenda.length === 0) {
         lista.innerHTML = '<p class="sem-dados">Nenhum item adicionado ainda.</p>';
+        return;
     }
 
     itensVenda.forEach((item, index) => {
-        total += item.subtotal;
         const div = document.createElement("div");
         div.className = "item-adicionado";
         div.innerHTML = `
-            <span>Produto #${item.produtoId} | Qtd: ${item.quantidade} | 
-            R$ ${item.precoUnitario.toFixed(2)} un. | 
-            Subtotal: R$ ${item.subtotal.toFixed(2)}</span>
-            <button onclick="removerItem(${index})">🗑️</button>
+            <span>Produto #${item.produtoId} | Qtd: ${item.quantidade}</span>
+            <button class="btn-remover" onclick="removerItem(${index})">🗑️ Remover</button>
         `;
         lista.appendChild(div);
     });
-
-    totalSpan.textContent = total.toFixed(2).replace(".", ",");
 }
 
 async function registrarVenda() {
     const clienteId = parseInt(document.getElementById("clienteId").value);
     const usuarioId = parseInt(document.getElementById("usuarioId").value);
-    const mensagem = document.getElementById("mensagem");
 
-    // Validações
     if (!clienteId || clienteId <= 0) {
         mostrarMensagem("Informe o ID do cliente.", "erro");
         return;
@@ -100,18 +91,18 @@ async function registrarVenda() {
         });
 
         if (response.ok) {
-            mostrarMensagem("✅ Venda registrada com sucesso!", "sucesso");
+            mostrarMensagem("Venda registrada com sucesso!", "sucesso");
             itensVenda = [];
             renderizarItens();
             document.getElementById("clienteId").value = "";
             document.getElementById("usuarioId").value = "";
-            carregarVendas(); // Recarrega a lista
+            carregarVendas();
         } else {
             const erro = await response.text();
-            mostrarMensagem("❌ Erro: " + erro, "erro");
+            mostrarMensagem("Erro: " + erro, "erro");
         }
     } catch (error) {
-        mostrarMensagem("❌ Erro de conexão com o servidor.", "erro");
+        mostrarMensagem("Erro de conexão com o servidor.", "erro");
         console.error(error);
     }
 }
