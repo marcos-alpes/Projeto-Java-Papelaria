@@ -4,22 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGC Papelaria - Vendas</title>
+    <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="vendas.css">
 </head>
 <body>
+<header class="app-topbar">
+    <div class="app-topbar-inner">
+        <a class="brand" href="../../index.html">
+            <strong>SGC Papelaria</strong>
+            <span>Sistema de Gestao Comercial</span>
+        </a>
+        <nav class="app-nav">
+            <a href="../../index.html">Inicio</a>
+            <a href="../../clientes.html">Clientes</a>
+            <a href="../../frontend-produto/produtos.html">Produtos</a>
+            <a href="../../frontend-produto/estoque.html">Estoque</a>
+            <a class="active" href="vendas.html">Vendas</a>
+            <a href="../relatorios/relatorios.html">Relatorios</a>
+        </nav>
+    </div>
+</header>
 
-<div class="container">
-    <h1>SGC Papelaria</h1>
-    <h2>Registrar Venda</h2>
+<main class="container">
+    <section class="page-header">
+        <div>
+            <h1>Registrar Venda</h1>
+            <p>Informe cliente, usuario responsavel e os produtos vendidos.</p>
+        </div>
+    </section>
 
-    <!-- Formulário de nova venda -->
-    <form onsubmit="return false;">
-        <input type="number" id="clienteId" placeholder="ID do Cliente" min="1">
-        <input type="number" id="usuarioId" placeholder="ID do Usuário Responsável" min="1">
+    <form onsubmit="return false;" class="panel">
+        <div class="form-grid">
+            <input type="number" id="clienteId" placeholder="ID do Cliente" min="1">
+            <input type="number" id="usuarioId" placeholder="ID do Usuario Responsavel" min="1">
+        </div>
 
         <h2>Itens da Venda</h2>
 
-        <div style="display: flex; gap: 10px;">
+        <div class="form-grid">
             <input type="number" id="produtoId" placeholder="ID do Produto" min="1">
             <input type="number" id="quantidade" placeholder="Quantidade" min="1">
         </div>
@@ -27,28 +49,28 @@
         <button type="button" class="btn-adicionar" onclick="adicionarItem()">+ Adicionar Item</button>
     </form>
 
-    <!-- Lista de itens adicionados -->
     <div id="listaItens"></div>
 
-    <!-- Total -->
     <div class="total-box">
         <strong>Total: R$ <span id="totalVenda">0,00</span></strong>
     </div>
 
-    <button class="btn-registrar" onclick="registrarVenda()">✅ Registrar Venda</button>
+    <button class="btn-registrar" onclick="registrarVenda()">Registrar Venda</button>
 
-    <div id="mensagem"></div>
+    <div id="mensagem" class="mensagem"></div>
 
     <hr style="margin: 30px 0;">
 
-    <!-- Tabela de vendas -->
-    <h2>Vendas Registradas</h2>
-    <button onclick="carregarVendas()" style="background-color:#2d89ef; color:white; margin-bottom:16px;">
-        🔄 Atualizar Lista
-    </button>
+    <section class="page-header">
+        <div>
+            <h2>Vendas Registradas</h2>
+            <p>Historico das vendas retornadas pela API.</p>
+        </div>
+        <button type="button" onclick="carregarVendas()">Atualizar Lista</button>
+    </section>
 
     <div id="tabelaVendas"></div>
-</div>
+</main>
 
 <script src="vendas.js"></script>
 </body>

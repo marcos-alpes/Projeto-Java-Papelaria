@@ -38,6 +38,11 @@ function listarClientes() {
             const tabela = document.getElementById("tabelaClientes");
             tabela.innerHTML = "";
 
+            if (clientes.length === 0) {
+                tabela.innerHTML = '<tr><td colspan="7" class="sem-dados">Nenhum cliente cadastrado.</td></tr>';
+                return;
+            }
+
             clientes.forEach(cliente => {
                 tabela.innerHTML += `
                     <tr>
@@ -48,8 +53,10 @@ function listarClientes() {
                         <td>${cliente.telefone}</td>
                         <td>${cliente.endereco}</td>
                         <td>
+                            <div class="actions">
                             <button class="btn-editar" onclick="editarCliente(${cliente.id}, '${cliente.nome}', '${cliente.cpf}', '${cliente.email}', '${cliente.telefone}', '${cliente.endereco}')">Editar</button>
                             <button class="btn-excluir" onclick="excluirCliente(${cliente.id})">Excluir</button>
+                            </div>
                         </td>
                     </tr>
                 `;

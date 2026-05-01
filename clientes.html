@@ -2,43 +2,65 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Clientes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria - Clientes</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="clientes.css">
 </head>
 <body>
+<header class="app-topbar">
+    <div class="app-topbar-inner">
+        <a class="brand" href="index.html">
+            <strong>SGC Papelaria</strong>
+            <span>Sistema de Gestao Comercial</span>
+        </a>
+        <nav class="app-nav">
+            <a href="index.html">Inicio</a>
+            <a class="active" href="clientes.html">Clientes</a>
+            <a href="frontend-produto/produtos.html">Produtos</a>
+            <a href="frontend-produto/estoque.html">Estoque</a>
+            <a href="frontend/vendas/vendas.html">Vendas</a>
+            <a href="frontend/relatorios/relatorios.html">Relatorios</a>
+        </nav>
+    </div>
+</header>
 
-<div class="container">
-    <h1>Cadastro de Clientes</h1>
+<main class="container">
+    <section class="page-header">
+        <div>
+            <h1>Cadastro de Clientes</h1>
+            <p>Controle os clientes cadastrados e seus dados de contato.</p>
+        </div>
+    </section>
 
-    <form id="formCliente">
+    <form id="formCliente" class="form-grid panel">
         <input type="hidden" id="id">
-
         <input type="text" id="nome" placeholder="Nome" required>
         <input type="text" id="cpf" placeholder="CPF" required>
         <input type="email" id="email" placeholder="Email" required>
         <input type="text" id="telefone" placeholder="Telefone">
-        <input type="text" id="endereco" placeholder="Endereço">
-
+        <input type="text" id="endereco" placeholder="Endereco">
         <button type="submit">Salvar Cliente</button>
     </form>
 
     <h2>Clientes Cadastrados</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="tabelaClientes"></tbody>
-    </table>
-</div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Endereco</th>
+                    <th>Acoes</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaClientes"></tbody>
+        </table>
+    </div>
+</main>
 
 <script src="clientes.js"></script>
 </body>

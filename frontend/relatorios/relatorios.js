@@ -127,6 +127,7 @@ function renderizarTabelaVendas(vendas, container) {
 
     let totalGeral = 0;
     let html = `
+        <div class="table-wrap">
         <table>
             <thead>
                 <tr>
@@ -155,7 +156,7 @@ function renderizarTabelaVendas(vendas, container) {
         `;
     });
 
-    html += `</tbody></table>`;
+    html += `</tbody></table></div>`;
     html += `<div class="total-relatorio">Total Geral: R$ ${totalGeral.toFixed(2).replace(".", ",")}</div>`;
 
     container.innerHTML = html;

@@ -8,6 +8,7 @@ import com.papelaria.sgc.dto.LoginDTO;
 import com.papelaria.sgc.dto.RespostaDTO;
 import com.papelaria.sgc.dto.UsuarioDTO;
 import com.papelaria.sgc.service.UsuarioService;
+import com.papelaria.sgc.service.UsuarioService.TokenLogin;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -30,7 +31,7 @@ public class UsuarioController {
                     .status(HttpStatus.CREATED)
                     .body(new RespostaDTO("Usuário cadastrado com sucesso"));
 
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             return ResponseEntity
                     .badRequest()
                     .body(new RespostaDTO(e.getMessage()));
@@ -46,10 +47,14 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<RespostaDTO> login(@RequestBody LoginDTO dto) {
         try {
-            boolean loginValido = usuarioService.login(dto);
+            TokenLogin tokenLogin = usuarioService.login(dto);
 
-            if (loginValido) {
-                return ResponseEntity.ok(new RespostaDTO("Login realizado com sucesso"));
+            if (tokenLogin != null) {
+                return ResponseEntity.ok(new RespostaDTO(
+                        "Login realizado com sucesso",
+                        tokenLogin.token(),
+                        tokenLogin.expiraEm()
+                ));
             }
 
             return ResponseEntity

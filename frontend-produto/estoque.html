@@ -1,31 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Estoque</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria - Estoque</title>
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="estoque.css">
 </head>
 <body>
+<header class="app-topbar">
+    <div class="app-topbar-inner">
+        <a class="brand" href="../index.html">
+            <strong>SGC Papelaria</strong>
+            <span>Sistema de Gestao Comercial</span>
+        </a>
+        <nav class="app-nav">
+            <a href="../index.html">Inicio</a>
+            <a href="../clientes.html">Clientes</a>
+            <a href="produtos.html">Produtos</a>
+            <a class="active" href="estoque.html">Estoque</a>
+            <a href="../frontend/vendas/vendas.html">Vendas</a>
+            <a href="../frontend/relatorios/relatorios.html">Relatorios</a>
+        </nav>
+    </div>
+</header>
 
-<div class="container-produtos">
+<main class="container-produtos">
+    <section class="page-header">
+        <div>
+            <h1>Controle de Estoque</h1>
+            <p>Consulte todos os produtos e acompanhe quais estao abaixo do minimo.</p>
+        </div>
+    </section>
 
-    <h1>Controle de Estoque</h1>
-
-    <h2>Produtos com Estoque Baixo</h2>
-
-    <table class="tabela-produtos">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Estoque</th>
-                <th>Mínimo</th>
-            </tr>
-        </thead>
-        <tbody id="tabela-estoque"></tbody>
-    </table>
-
-</div>
+    <h2>Produtos em Estoque</h2>
+    <div class="table-wrap">
+        <table class="tabela-produtos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Estoque</th>
+                    <th>Minimo</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-estoque"></tbody>
+        </table>
+    </div>
+</main>
 
 <script src="estoque.js"></script>
 </body>

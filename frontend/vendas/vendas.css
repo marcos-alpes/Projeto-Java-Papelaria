@@ -1,138 +1,55 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 90%;
-    margin: 30px auto;
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-}
-
-h1, h2 {
-    text-align: center;
-}
-
-form {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 30px;
-}
-
-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-form button {
-    background-color: #2d89ef;
-    color: white;
-}
-
-/* Botão de adicionar item */
-.btn-adicionar {
-    background-color: #2d89ef;
-    color: white;
-}
-
-/* Botão de registrar venda */
 .btn-registrar {
-    background-color: #28a745;
-    color: white;
     width: 100%;
     margin-top: 10px;
 }
 
-/* Botão de remover item da lista */
 .btn-remover {
-    background-color: #dc3545;
-    color: white;
-    padding: 6px 12px;
+    min-height: 34px;
+    padding: 8px 10px;
+    font-size: 0.86rem;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th {
-    background-color: #2d89ef;
-    color: white;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-.btn-editar {
-    background-color: #ffc107;
-}
-
-.btn-excluir {
-    background-color: #dc3545;
-    color: white;
-}
-
-/* Caixa de itens adicionados */
 .item-adicionado {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
     border-radius: 6px;
-    margin-bottom: 6px;
-    background-color: #f4f6f8;
-    font-size: 0.9rem;
+    margin-bottom: 8px;
+    background-color: var(--surface-soft);
+    font-size: 0.92rem;
 }
 
-/* Total da venda */
 .total-box {
-    background-color: #e9f7ef;
-    border-left: 4px solid #28a745;
+    background-color: #ecfdf3;
+    border-left: 4px solid var(--success);
     padding: 12px;
     border-radius: 0 6px 6px 0;
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 1rem;
-    color: #1a5c30;
+    color: #166534;
 }
 
-/* Mensagem de sucesso/erro */
-.mensagem-sucesso {
-    background-color: #d4edda;
-    color: #155724;
+.mensagem {
+    min-height: 20px;
+    margin-top: 12px;
+}
+
+.mensagem.sucesso,
+.mensagem.erro {
     padding: 10px;
     border-radius: 6px;
     text-align: center;
-    margin-top: 10px;
 }
 
-.mensagem-erro {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-    margin-top: 10px;
+.mensagem.sucesso {
+    background-color: #dcfce7;
+    color: #166534;
 }
 
-.sem-dados {
-    text-align: center;
-    color: #999;
-    padding: 20px;
-    font-style: italic;
+.mensagem.erro {
+    background-color: #fee2e2;
+    color: #991b1b;
 }

@@ -3,49 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGC Papelaria - Relatórios</title>
+    <title>SGC Papelaria - Relatorios</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="relatorios.css">
 </head>
 <body>
+<header class="app-topbar">
+    <div class="app-topbar-inner">
+        <a class="brand" href="../../index.html">
+            <strong>SGC Papelaria</strong>
+            <span>Sistema de Gestao Comercial</span>
+        </a>
+        <nav class="app-nav">
+            <a href="../../index.html">Inicio</a>
+            <a href="../../clientes.html">Clientes</a>
+            <a href="../../frontend-produto/produtos.html">Produtos</a>
+            <a href="../../frontend-produto/estoque.html">Estoque</a>
+            <a href="../vendas/vendas.html">Vendas</a>
+            <a class="active" href="relatorios.html">Relatorios</a>
+        </nav>
+    </div>
+</header>
 
-<div class="container">
-    <h1>SGC Papelaria</h1>
-    <h2>Relatórios de Vendas</h2>
+<main class="container">
+    <section class="page-header">
+        <div>
+            <h1>Relatorios de Vendas</h1>
+            <p>Consulte vendas por periodo, cliente e grafico anual.</p>
+        </div>
+    </section>
 
-    <!-- Relatório por Período -->
-    <div class="secao">
-        <h2>Vendas por Período</h2>
-        <form onsubmit="return false;">
+    <section class="secao">
+        <h2>Vendas por Periodo</h2>
+        <form onsubmit="return false;" class="form-grid">
             <input type="date" id="dataInicio">
             <input type="date" id="dataFim">
-            <button type="button" onclick="buscarPorPeriodo()">🔍 Buscar</button>
+            <button type="button" onclick="buscarPorPeriodo()">Buscar</button>
         </form>
         <div id="resultadoPeriodo"></div>
-    </div>
+    </section>
 
-    <!-- Relatório por Cliente -->
-    <div class="secao">
+    <section class="secao">
         <h2>Vendas por Cliente</h2>
-        <form onsubmit="return false;">
+        <form onsubmit="return false;" class="form-grid">
             <input type="number" id="clienteIdRelatorio" placeholder="ID do Cliente" min="1">
-            <button type="button" onclick="buscarPorCliente()">🔍 Buscar</button>
+            <button type="button" onclick="buscarPorCliente()">Buscar</button>
         </form>
         <div id="resultadoCliente"></div>
-    </div>
+    </section>
 
-    <!-- Gráfico Anual -->
-    <div class="secao">
-        <h2>Gráfico de Vendas Anuais</h2>
-        <form onsubmit="return false;">
+    <section class="secao">
+        <h2>Grafico de Vendas Anuais</h2>
+        <form onsubmit="return false;" class="form-grid">
             <input type="number" id="anoGrafico" placeholder="Ano (ex: 2025)" min="2020" max="2099">
-            <button type="button" onclick="carregarGrafico()">📈 Gerar Gráfico</button>
+            <button type="button" onclick="carregarGrafico()">Gerar Grafico</button>
         </form>
         <div class="grafico-container">
             <canvas id="graficoVendas"></canvas>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
 <script src="relatorios.js"></script>
 </body>

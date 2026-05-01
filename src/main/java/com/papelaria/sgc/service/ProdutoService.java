@@ -69,6 +69,6 @@ public class ProdutoService {
     // ESTOQUE BAIXO
     // ==========================
     public List<Produto> estoqueBaixo() {
-        return repository.findByQuantidadeEstoqueLessThan(10);
+        return repository.findProdutosComEstoqueBaixo();
     }
 }

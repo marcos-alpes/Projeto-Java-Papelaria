@@ -1,45 +1,66 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria - Produtos</title>
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="produtos.css">
 </head>
 <body>
+<header class="app-topbar">
+    <div class="app-topbar-inner">
+        <a class="brand" href="../index.html">
+            <strong>SGC Papelaria</strong>
+            <span>Sistema de Gestao Comercial</span>
+        </a>
+        <nav class="app-nav">
+            <a href="../index.html">Inicio</a>
+            <a href="../clientes.html">Clientes</a>
+            <a class="active" href="produtos.html">Produtos</a>
+            <a href="estoque.html">Estoque</a>
+            <a href="../frontend/vendas/vendas.html">Vendas</a>
+            <a href="../frontend/relatorios/relatorios.html">Relatorios</a>
+        </nav>
+    </div>
+</header>
 
-<div class="container-produtos">
+<main class="container-produtos">
+    <section class="page-header">
+        <div>
+            <h1>Cadastro de Produtos</h1>
+            <p>Gerencie precos, estoque atual e estoque minimo.</p>
+        </div>
+    </section>
 
-    <h1>Cadastro de Produtos</h1>
-
-    <form id="form-produto" class="form-produto">
+    <form id="form-produto" class="form-produto form-grid panel">
         <input type="hidden" id="id">
-
         <input type="text" id="nome" placeholder="Nome do produto" required>
-        <input type="text" id="descricao" placeholder="Descrição" required>
-        <input type="number" id="preco" placeholder="Preço" required>
-        <input type="number" id="quantidadeEstoque" placeholder="Quantidade em estoque" required>
-        <input type="number" id="estoqueMinimo" placeholder="Estoque mínimo" required>
-
-        <button type="submit" class="btn-salvar">Salvar</button>
+        <input type="text" id="descricao" placeholder="Descricao" required>
+        <input type="number" id="preco" placeholder="Preco" step="0.01" min="0" required>
+        <input type="number" id="quantidadeEstoque" placeholder="Quantidade em estoque" min="0" required>
+        <input type="number" id="estoqueMinimo" placeholder="Estoque minimo" min="0" required>
+        <button type="submit" class="btn-salvar">Salvar Produto</button>
     </form>
 
     <h2>Lista de Produtos</h2>
-
-    <table class="tabela-produtos">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Estoque</th>
-                <th>Mínimo</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="tabela-produtos"></tbody>
-    </table>
-
-</div>
+    <div class="table-wrap">
+        <table class="tabela-produtos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Preco</th>
+                    <th>Estoque</th>
+                    <th>Minimo</th>
+                    <th>Acoes</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-produtos"></tbody>
+        </table>
+    </div>
+</main>
 
 <script src="produtos.js"></script>
 </body>

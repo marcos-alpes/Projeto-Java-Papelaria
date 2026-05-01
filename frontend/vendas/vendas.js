@@ -1,38 +1,69 @@
 const API_URL = "http://localhost:8080/api";
+const PRODUTOS_API_URL = "http://localhost:8080/produtos";
 
 let itensVenda = [];
+let mensagemTimer = null;
 
-function adicionarItem() {
+async function adicionarItem() {
     const produtoId = parseInt(document.getElementById("produtoId").value);
     const quantidade = parseInt(document.getElementById("quantidade").value);
-    const preco = parseFloat(document.getElementById("precoUnitario").value);
 
     if (!produtoId || produtoId <= 0) {
-        alert("Informe um ID de produto válido.");
+        alert("Informe um ID de produto valido.");
         return;
     }
+
     if (!quantidade || quantidade <= 0) {
         alert("A quantidade deve ser maior que zero.");
         return;
     }
-    if (!preco || preco <= 0) {
-        alert("O preço unitário deve ser maior que zero.");
+
+    const produto = await buscarProduto(produtoId);
+    if (!produto) {
         return;
     }
 
+    if (produto.quantidadeEstoque < quantidade) {
+        mostrarMensagem(
+            `Estoque insuficiente para ${produto.nome}. Disponivel: ${produto.quantidadeEstoque}.`,
+            "erro"
+        );
+        return;
+    }
+
+    const preco = Number(produto.preco);
     const item = {
-        produtoId: produtoId,
+        produtoId: produto.id,
+        nomeProduto: produto.nome,
         quantidade: quantidade,
         precoUnitario: preco,
         subtotal: preco * quantidade
     };
+
     itensVenda.push(item);
 
     document.getElementById("produtoId").value = "";
     document.getElementById("quantidade").value = "";
-    document.getElementById("precoUnitario").value = "";
 
     renderizarItens();
+    mostrarMensagem("Item adicionado.", "sucesso");
+}
+
+async function buscarProduto(produtoId) {
+    try {
+        const response = await fetch(`${PRODUTOS_API_URL}/${produtoId}`);
+
+        if (!response.ok) {
+            mostrarMensagem("Produto nao encontrado.", "erro");
+            return null;
+        }
+
+        return await response.json();
+    } catch (error) {
+        mostrarMensagem("Erro de conexao ao buscar produto.", "erro");
+        console.error(error);
+        return null;
+    }
 }
 
 function removerItem(index) {
@@ -56,10 +87,10 @@ function renderizarItens() {
         const div = document.createElement("div");
         div.className = "item-adicionado";
         div.innerHTML = `
-            <span>Produto #${item.produtoId} | Qtd: ${item.quantidade} | 
-            R$ ${item.precoUnitario.toFixed(2)} un. | 
+            <span>${item.nomeProduto || "Produto"} #${item.produtoId} | Qtd: ${item.quantidade} |
+            R$ ${item.precoUnitario.toFixed(2)} un. |
             Subtotal: R$ ${item.subtotal.toFixed(2)}</span>
-            <button onclick="removerItem(${index})">🗑️</button>
+            <button type="button" class="btn-remover" onclick="removerItem(${index})">Remover</button>
         `;
         lista.appendChild(div);
     });
@@ -70,17 +101,17 @@ function renderizarItens() {
 async function registrarVenda() {
     const clienteId = parseInt(document.getElementById("clienteId").value);
     const usuarioId = parseInt(document.getElementById("usuarioId").value);
-    const mensagem = document.getElementById("mensagem");
 
-    // Validações
     if (!clienteId || clienteId <= 0) {
         mostrarMensagem("Informe o ID do cliente.", "erro");
         return;
     }
+
     if (!usuarioId || usuarioId <= 0) {
-        mostrarMensagem("Informe o ID do usuário responsável.", "erro");
+        mostrarMensagem("Informe o ID do usuario responsavel.", "erro");
         return;
     }
+
     if (itensVenda.length === 0) {
         mostrarMensagem("Adicione pelo menos 1 item antes de registrar a venda.", "erro");
         return;
@@ -89,7 +120,10 @@ async function registrarVenda() {
     const venda = {
         clienteId: clienteId,
         usuarioId: usuarioId,
-        itens: itensVenda
+        itens: itensVenda.map(item => ({
+            produtoId: item.produtoId,
+            quantidade: item.quantidade
+        }))
     };
 
     try {
@@ -100,18 +134,18 @@ async function registrarVenda() {
         });
 
         if (response.ok) {
-            mostrarMensagem("✅ Venda registrada com sucesso!", "sucesso");
+            mostrarMensagem("Venda registrada com sucesso!", "sucesso");
             itensVenda = [];
             renderizarItens();
             document.getElementById("clienteId").value = "";
             document.getElementById("usuarioId").value = "";
-            carregarVendas(); // Recarrega a lista
+            carregarVendas();
         } else {
             const erro = await response.text();
-            mostrarMensagem("❌ Erro: " + erro, "erro");
+            mostrarMensagem("Erro: " + erro, "erro");
         }
     } catch (error) {
-        mostrarMensagem("❌ Erro de conexão com o servidor.", "erro");
+        mostrarMensagem("Erro de conexao com o servidor.", "erro");
         console.error(error);
     }
 }
@@ -122,6 +156,11 @@ async function carregarVendas() {
 
     try {
         const response = await fetch(`${API_URL}/vendas`);
+
+        if (!response.ok) {
+            throw new Error("Erro ao carregar vendas.");
+        }
+
         const vendas = await response.json();
 
         if (vendas.length === 0) {
@@ -130,13 +169,14 @@ async function carregarVendas() {
         }
 
         let html = `
+            <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Data</th>
                         <th>Cliente ID</th>
-                        <th>Usuário ID</th>
+                        <th>Usuario ID</th>
                         <th>Qtd Itens</th>
                         <th>Total</th>
                     </tr>
@@ -146,7 +186,8 @@ async function carregarVendas() {
 
         vendas.forEach(v => {
             const data = new Date(v.data).toLocaleDateString("pt-BR");
-            const total = v.valorTotal.toFixed(2).replace(".", ",");
+            const valorTotal = Number(v.valorTotal || 0);
+            const total = valorTotal.toFixed(2).replace(".", ",");
             html += `
                 <tr>
                     <td>${v.id}</td>
@@ -159,9 +200,8 @@ async function carregarVendas() {
             `;
         });
 
-        html += "</tbody></table>";
+        html += "</tbody></table></div>";
         container.innerHTML = html;
-
     } catch (error) {
         container.innerHTML = '<p class="sem-dados">Erro ao carregar vendas.</p>';
         console.error(error);
@@ -170,9 +210,13 @@ async function carregarVendas() {
 
 function mostrarMensagem(texto, tipo) {
     const el = document.getElementById("mensagem");
+    clearTimeout(mensagemTimer);
     el.textContent = texto;
     el.className = "mensagem " + tipo;
-    setTimeout(() => { el.className = "mensagem"; }, 4000);
+    mensagemTimer = setTimeout(() => {
+        el.textContent = "";
+        el.className = "mensagem";
+    }, 4000);
 }
 
 window.onload = function () {

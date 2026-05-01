@@ -2,7 +2,16 @@ package com.papelaria.sgc.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.papelaria.sgc.model.Cliente;
 import com.papelaria.sgc.service.ClienteService;
@@ -19,8 +28,12 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente cadastrar(@RequestBody Cliente cliente) {
-        return clienteService.salvar(cliente);
+    public ResponseEntity<?> cadastrar(@RequestBody Cliente cliente) {
+        try {
+            return ResponseEntity.ok(clienteService.salvar(cliente));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
@@ -29,17 +42,30 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarPorId(@PathVariable Long id) {
-        return clienteService.buscarPorId(id);
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(clienteService.buscarPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public Cliente atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
-        return clienteService.atualizar(id, cliente);
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
+        try {
+            return ResponseEntity.ok(clienteService.atualizar(id, cliente));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable Long id) {
-        clienteService.excluir(id);
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
+        try {
+            clienteService.excluir(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

@@ -1,74 +1,12 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
-    margin: 0;
-    padding: 0;
-}
-
-.container-produtos {
-    width: 90%;
-    margin: 30px auto;
-    background-color: white;
-    padding: 25px;
-    border-radius: 10px;
-}
-
-h1, h2 {
-    text-align: center;
-}
-
-.form-produto {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 30px;
-}
-
-.form-produto input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.btn-salvar {
-    background-color: #2d89ef;
-    color: white;
-}
-
-.tabela-produtos {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.tabela-produtos th {
-    background-color: #2d89ef;
-    color: white;
-}
-
-.tabela-produtos th,
-.tabela-produtos td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-.btn-editar {
-    background-color: #ffc107;
-}
-
+.btn-editar,
 .btn-excluir {
-    background-color: #dc3545;
-    color: white;
+    min-height: 34px;
+    padding: 8px 10px;
+    font-size: 0.86rem;
 }
 
 .estoque-baixo {
-    background-color: #ffe5e5;
-    color: #a10000;
-    font-weight: bold;
+    background-color: #fff1f2;
+    color: #991b1b;
+    font-weight: 700;
 }
